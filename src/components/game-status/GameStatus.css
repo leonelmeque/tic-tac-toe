@@ -1,0 +1,4 @@
+.game-status__winner {
+  display: inline-flex;
+  gap: 0.5rem;
+}
