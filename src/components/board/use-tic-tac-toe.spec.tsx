@@ -1,26 +1,11 @@
-import { renderHook } from "@testing-library/react";
-import { useGameBoard } from "./use-game-board";
-import { useGameLogic } from "./use-game-logic";
+import {renderHook} from "@testing-library/react";
+import {useTicTacToe} from "./use-tic-tac-toe";
 
-const useRenderHookHelper = () => {
-  const { board, handleBoardMutation } = useGameBoard();
-  const { toggleCell, currentMaxMoves, turn, gameWinner, resetScore } =
-    useGameLogic(board, handleBoardMutation);
 
-  return {
-    toggleCell,
-    currentMaxMoves,
-    turn,
-    board,
-    gameWinner,
-    resetScore,
-  };
-};
-
-describe("useGameLogic", () => {
+describe("use-tic-tac-toe", () => {
   describe("diagonal wins are possible when", () => {
-    it("the same player fills cells left to right", () => {
-      const { result, rerender } = renderHook(useRenderHookHelper);
+    it("the same player fills cells left to right", async () => {
+      const {result, rerender} = renderHook(useTicTacToe);
 
       result.current.toggleCell("X", 0, 0);
       rerender();
@@ -39,7 +24,7 @@ describe("useGameLogic", () => {
     });
 
     it("the same player fills cells right to left", () => {
-      const { result, rerender } = renderHook(useRenderHookHelper);
+      const {result, rerender} = renderHook(useTicTacToe);
 
       result.current.toggleCell("X", 0, 2);
       rerender();
@@ -60,7 +45,7 @@ describe("useGameLogic", () => {
 
   describe("vertical wins are possible when", () => {
     it("the same player fills column 1 and rows 1,2 and 3", () => {
-      const { result, rerender } = renderHook(useRenderHookHelper);
+      const {result, rerender} = renderHook(useTicTacToe);
 
       result.current.toggleCell("X", 1, 2);
       rerender();
@@ -80,7 +65,7 @@ describe("useGameLogic", () => {
     });
 
     it("the same player fills column 2 and rows 1,2 and 3", () => {
-      const { result, rerender } = renderHook(useRenderHookHelper);
+      const {result, rerender} = renderHook(useTicTacToe);
       // row column
       result.current.toggleCell("X", 1, 0);
       rerender();
@@ -100,7 +85,7 @@ describe("useGameLogic", () => {
     });
 
     it("the same player fills column 3 and rows 1,2 and 3", () => {
-      const { result, rerender } = renderHook(useRenderHookHelper);
+      const {result, rerender} = renderHook(useTicTacToe);
       // row column
       result.current.toggleCell("X", 2, 1);
       rerender();
@@ -122,7 +107,7 @@ describe("useGameLogic", () => {
 
   describe("horizontal wins are possible when", () => {
     it("the same player fills rows 1 and column 1,2 and 3", () => {
-      const { result, rerender } = renderHook(useRenderHookHelper);
+      const {result, rerender} = renderHook(useTicTacToe);
 
       result.current.toggleCell("X", 1, 2);
       rerender();
@@ -142,7 +127,7 @@ describe("useGameLogic", () => {
     });
 
     it("the same player fills row 2 and column 1,2 and 3", () => {
-      const { result, rerender } = renderHook(useRenderHookHelper);
+      const {result, rerender} = renderHook(useTicTacToe);
       // row column
       result.current.toggleCell("X", 2, 0);
       rerender();
@@ -162,7 +147,7 @@ describe("useGameLogic", () => {
     });
 
     it("the same player fills column 3 and rows 1,2 and 3", () => {
-      const { result, rerender } = renderHook(useRenderHookHelper);
+      const {result, rerender} = renderHook(useTicTacToe);
       // row column
       result.current.toggleCell("X", 1, 0);
       rerender();
@@ -183,7 +168,7 @@ describe("useGameLogic", () => {
   });
 
   it("Result show be a draw", () => {
-    const { result, rerender } = renderHook(useRenderHookHelper);
+    const {result, rerender} = renderHook(useTicTacToe);
 
     result.current.toggleCell("X", 0, 0);
     rerender();
@@ -209,7 +194,7 @@ describe("useGameLogic", () => {
   });
 
   it("Scores resets correctly", () => {
-    const { result, rerender } = renderHook(useRenderHookHelper);
+    const {result, rerender} = renderHook(useTicTacToe);
 
     result.current.toggleCell("X", 0, 0);
     rerender();
@@ -220,7 +205,7 @@ describe("useGameLogic", () => {
 
     expect(result.current.currentMaxMoves).toBe(3);
 
-    result.current.resetScore();
+    result.current.handleResetBoard();
     rerender();
 
     expect(result.current.currentMaxMoves).toBe(0);

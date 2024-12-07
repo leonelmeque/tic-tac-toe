@@ -1,25 +1,25 @@
 import React from "react";
-import { useGameBoard } from "../../hooks/use-game-board";
 import "./Board.css";
-import { RowProps } from "../row/Row";
-import { CellProps } from "../cell/Cell";
-import { useGameLogic } from "../../hooks/use-game-logic";
-import { GameStatus } from "../game-status/GameStatus";
+import {RowProps} from "../row/Row";
+import {CellProps} from "../cell/Cell";
+import {GameStatus} from "../game-status/GameStatus";
+import {useTicTacToe} from "./use-tic-tac-toe";
 
 type BoardProps = {
   Cell: React.FunctionComponent<CellProps>;
   Row: React.FunctionComponent<RowProps>;
 };
 
-export default function Board({ Cell, Row }: BoardProps) {
-  const { board, handleBoardMutation, handleResetBoard } = useGameBoard();
-  const { toggleCell, currentMaxMoves, turn, gameWinner, resetScore } =
-    useGameLogic(board, handleBoardMutation);
-
-  const resetGame = () => {
-    handleResetBoard();
-    resetScore();
-  };
+export default function Board({Cell, Row}: BoardProps) {
+  const {
+    board,
+    handleResetBoard,
+    disabledGameIfPlayerHasWonOrMaxMoves,
+    currentMaxMoves,
+    turn,
+    gameWinner,
+    toggleCell
+  } = useTicTacToe();
 
   return (
     <main>
@@ -39,12 +39,13 @@ export default function Board({ Cell, Row }: BoardProps) {
                 <Cell
                   key={cellIndex}
                   state={cellState}
+                  disabled={disabledGameIfPlayerHasWonOrMaxMoves}
                   onToggle={() => toggleCell(turn, rowIndex, cellIndex)}></Cell>
               ))}
             </Row>
           ))}
         </div>
-        <button className="reset" onClick={resetGame}>
+        <button className="reset" onClick={handleResetBoard}>
           RESET
         </button>
       </div>
