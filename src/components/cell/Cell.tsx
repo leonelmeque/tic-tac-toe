@@ -3,9 +3,15 @@ import "./Cell.css";
 export type CellProps = {
   state?: string;
   onToggle?: () => void;
+  disabled?: boolean
 };
 
-export default function Cell({ onToggle = () => {}, state }: CellProps) {
+export default function Cell({
+                               onToggle = () => {
+                               },
+                               state,
+                               disabled
+                             }: CellProps) {
   const imgName = state === "X" ? "/assets/cross.png" : "/assets/circle.png";
 
   const handleToggle = () => {
@@ -13,10 +19,13 @@ export default function Cell({ onToggle = () => {}, state }: CellProps) {
   };
 
   return (
-    <div className="cell" onClick={handleToggle}>
+    <button className="cell" onClick={handleToggle} disabled={disabled}>
       {state && (
-        <img src={imgName} alt={state ? `Cell has ${state}` : "Empty Cell"} />
+        <img src={imgName} alt={state ? `Cell has ${state}` : "Empty Cell"}/>
       )}
-    </div>
+    </button>
   );
 }
+
+
+Cell.displayName = 'Cell'
