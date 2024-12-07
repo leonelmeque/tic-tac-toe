@@ -1,15 +1,21 @@
 .cell {
-  width: 10rem;
-  height: 10rem;
-  display: flex;
-  place-content: center;
-  place-items: center;
-  background-color: rgb(60, 50, 130);
-  margin: 0.25rem 0.25rem;
-  border-radius: 4px;
-  cursor: pointer;
+    all: unset;
+    width: 10rem;
+    height: 10rem;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    background-color: rgb(60, 50, 130);
+    margin: 0.25rem 0.25rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cell[disabled] {
+    background-color: rgb(110, 108, 134);
+    filter: grayscale(100%);
 }
 
 .cell:active {
-  background-color: rgb(50, 40, 110);
+    background-color: rgb(50, 40, 110);
 }
